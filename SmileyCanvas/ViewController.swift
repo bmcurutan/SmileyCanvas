@@ -75,16 +75,21 @@ class ViewController: UIViewController {
             }
         }
     }
+
     
     @IBAction func onPan(_ sender: UIPanGestureRecognizer) {
         
         if sender.state == .began {
             faceOriginalCenter = sender.view?.center
             let imageView = sender.view as! UIImageView
+            let panGesture = UIPanGestureRecognizer(target: self, action: #selector(didPan(sender:)))
             
             // Create a new image view that has the same image as the one currently panning
             newlyCreatedFace = UIImageView(image: imageView.image)
             newlyCreatedFace.frame.size = CGSize(width: 75.0, height: 75.0)
+            
+            newlyCreatedFace.isUserInteractionEnabled = true
+            newlyCreatedFace.addGestureRecognizer(panGesture)
             
             // Add the new face to the tray's parent view.
             view.addSubview(newlyCreatedFace)
@@ -100,6 +105,27 @@ class ViewController: UIViewController {
             
         } else if sender.state == .ended {
 
+        }
+    }
+    
+    var originalCenter = CGPoint()
+    
+    func didPan(sender: UIPanGestureRecognizer) {
+        let location = sender.location(in: view)
+        let velocity = sender.velocity(in: view)
+        let translation = sender.translation(in: view)
+        
+        
+        if sender.state == .began {
+            originalCenter = (sender.view?.center)!
+            print("Gesture began")
+        } else if sender.state == .changed {
+            print("Gesture is changing")
+            sender.view?.center = CGPoint(x: (originalCenter.x) + sender.translation(in: sender.view).x, y: (originalCenter.y) + sender.translation(in: sender.view).y)
+            print("x: \(sender.translation(in: sender.view).x)")
+            print("y: \(sender.translation(in: sender.view).y)")
+        } else if sender.state == .ended {
+            print("Gesture ended")
         }
     }
     
