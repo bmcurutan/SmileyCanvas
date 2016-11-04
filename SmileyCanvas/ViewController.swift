@@ -111,21 +111,18 @@ class ViewController: UIViewController {
     var originalCenter = CGPoint()
     
     func didPan(sender: UIPanGestureRecognizer) {
-        let location = sender.location(in: view)
-        let velocity = sender.velocity(in: view)
-        let translation = sender.translation(in: view)
-        
-        
         if sender.state == .began {
             originalCenter = (sender.view?.center)!
             print("Gesture began")
+            sender.view?.transform = CGAffineTransform(scaleX: 2, y: 2)
         } else if sender.state == .changed {
             print("Gesture is changing")
             sender.view?.center = CGPoint(x: (originalCenter.x) + sender.translation(in: sender.view).x, y: (originalCenter.y) + sender.translation(in: sender.view).y)
-            print("x: \(sender.translation(in: sender.view).x)")
-            print("y: \(sender.translation(in: sender.view).y)")
+            //print("x: \(sender.translation(in: sender.view).x)")
+            //print("y: \(sender.translation(in: sender.view).y)")
         } else if sender.state == .ended {
             print("Gesture ended")
+            sender.view?.transform = CGAffineTransform.identity
         }
     }
     
