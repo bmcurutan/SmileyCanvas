@@ -11,7 +11,7 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SmileyCanvas" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" misplaced="YES" id="Dhl-xC-IZt">
@@ -75,6 +75,7 @@
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="rCk-Gu-xsb" appends="YES" id="WKg-bj-oNf"/>
+                                    <outletCollection property="gestureRecognizers" destination="hpX-Q2-NY9" appends="YES" id="8ad-f1-F6c"/>
                                 </connections>
                             </view>
                         </subviews>
@@ -85,7 +86,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="rCk-Gu-xsb" userLabel="TrayPan"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="rCk-Gu-xsb" userLabel="TrayPan">
+                    <connections>
+                        <action selector="onTrayPanGesture:" destination="BYZ-38-t0r" id="TdH-rh-13a"/>
+                    </connections>
+                </panGestureRecognizer>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="reX-K6-A3g">
                     <connections>
                         <action selector="onPan:" destination="BYZ-38-t0r" id="fy3-fV-pCJ"/>
@@ -116,6 +121,11 @@
                         <action selector="onPan:" destination="BYZ-38-t0r" id="fWa-Di-fP2"/>
                     </connections>
                 </panGestureRecognizer>
+                <tapGestureRecognizer id="hpX-Q2-NY9">
+                    <connections>
+                        <action selector="onTrayTapGesture:" destination="BYZ-38-t0r" id="Qbw-ir-U4x"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="87" y="154"/>
         </scene>
@@ -132,6 +142,6 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+        <simulatedScreenMetrics key="destination" type="retina4_0.fullscreen"/>
     </simulatedMetricsContainer>
 </document>

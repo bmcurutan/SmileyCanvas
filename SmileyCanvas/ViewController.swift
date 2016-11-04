@@ -33,6 +33,15 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    @IBAction func onTrayTapGesture(_ sender: UITapGestureRecognizer) {
+        if trayView.center.y == trayCenterWhenOpen.y {
+            trayView.center = trayCenterWhenClosed
+        } else {
+            trayView.center = trayCenterWhenOpen
+        }
+    }
+    
+    
     @IBAction func onTrayPanGesture(_ sender: UIPanGestureRecognizer) {
         // Absolute (x,y) coordinates in parent view (parentView should be
         // the parent view of the tray)
@@ -48,9 +57,16 @@ class ViewController: UIViewController {
         } else if sender.state == .ended {
             print("Gesture ended at: \(point)")
             if sender.velocity(in: trayView).y > 0 { // moving down
-                trayView.center = trayCenterWhenClosed
+                
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.3, options: [], animations: { 
+                        self.trayView.center = self.trayCenterWhenClosed
+                    }, completion: nil)
+                
             } else { // moving up
-                trayView.center = trayCenterWhenOpen
+                
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.3, options: [], animations: {
+                        self.trayView.center = self.trayCenterWhenOpen
+                    }, completion: nil)
             }
         }
     }
