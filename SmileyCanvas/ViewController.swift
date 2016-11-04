@@ -13,6 +13,10 @@ class ViewController: UIViewController {
     var trayOriginalCenter: CGPoint!
     var trayCenterWhenOpen: CGPoint!
     var trayCenterWhenClosed: CGPoint!
+    var newlyCreatedFace: UIImageView!
+    
+    var faceOriginalCenter: CGPoint!
+    
 
     @IBOutlet weak var trayView: UIView!
     override func viewDidLoad() {
@@ -50,6 +54,34 @@ class ViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func onPan(_ sender: UIPanGestureRecognizer) {
+        
+        if sender.state == .began {
+            faceOriginalCenter = sender.view?.center
+            let imageView = sender.view as! UIImageView
+            
+            // Create a new image view that has the same image as the one currently panning
+            newlyCreatedFace = UIImageView(image: imageView.image)
+            newlyCreatedFace.frame.size = CGSize(width: 75.0, height: 75.0)
+            
+            // Add the new face to the tray's parent view.
+            view.addSubview(newlyCreatedFace)
+            
+            // Initialize the position of the new face.
+            newlyCreatedFace.center = imageView.center
+            
+            // Since the original face is in the tray, but the new face is in the
+            // main view, you have to offset the coordinates
+            newlyCreatedFace.center.y += trayView.frame.origin.y
+        } else if sender.state == .changed {
+            newlyCreatedFace.center = CGPoint(x: faceOriginalCenter.x + sender.translation(in: newlyCreatedFace).x, y: 347 + faceOriginalCenter.y + sender.translation(in: newlyCreatedFace).y)
+            
+        } else if sender.state == .ended {
+
+        }
+    }
+    
 
 }
 
