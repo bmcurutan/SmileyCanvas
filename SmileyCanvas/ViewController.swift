@@ -11,11 +11,17 @@ import UIKit
 class ViewController: UIViewController {
     
     var trayOriginalCenter: CGPoint!
+    var trayCenterWhenOpen: CGPoint!
+    var trayCenterWhenClosed: CGPoint!
 
     @IBOutlet weak var trayView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        trayCenterWhenOpen = self.trayView.center
+        trayCenterWhenClosed = CGPoint(x: self.trayView.center.x, y: self.trayView.center.y + 190)
+        
+        // TEST trayView.center = trayCenterWhenClosed
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,6 +43,11 @@ class ViewController: UIViewController {
             
         } else if sender.state == .ended {
             print("Gesture ended at: \(point)")
+            if sender.velocity(in: trayView).y > 0 { // moving down
+                trayView.center = trayCenterWhenClosed
+            } else { // moving up
+                trayView.center = trayCenterWhenOpen
+            }
         }
     }
 
